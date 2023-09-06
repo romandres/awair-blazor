@@ -1,0 +1,38 @@
+﻿@page "/"
+
+@attribute [RenderModeServer]
+
+@using Microsoft.AspNetCore.Components.QuickGrid
+
+<h1>Hello, Awair!</h1>
+
+<button @onclick="RefreshAsync" disabled="@IsLoading">Refresh</button>
+
+@if (IsLoading)
+{
+    <span> Loading...</span>
+}
+
+<p />
+
+@if (AirData is not null)
+{
+    <p>
+        Last refresh: @LastRefresh.LocalDateTime.ToString("yyyy-MM-dd HH:mm:sszzz")
+        @if (IsNewAirData)
+        {
+            <b> new data!</b>
+        }
+    </p>
+    
+    <QuickGrid Items="@AirData">
+        <PropertyColumn Property="@(d => d.DisplayName)" Sortable="true" />
+        <PropertyColumn Property="@(d => d.Data.Timestamp)" Format="yyyy-MM-dd HH:mm:sszzz" Sortable="true"/>
+        <PropertyColumn Property="@(d => d.Data.Score)" Sortable="true"/>
+        <PropertyColumn Property="@(d => d.Data.Temperature)" Sortable="true"/>
+        <PropertyColumn Property="@(d => d.Data.Humidity)" Sortable="true"/>
+        <PropertyColumn Property="@(d => d.Data.CarbonDioxide)" Sortable="true"/>
+        <PropertyColumn Property="@(d => d.Data.VolatileOrganicCompounds)" Sortable="true"/>
+        <PropertyColumn Property="@(d => d.Data.ParticulateMatter25)" Sortable="true"/>
+    </QuickGrid>
+}
