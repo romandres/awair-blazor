@@ -14,11 +14,16 @@ public class AwairService
         _awairOptions = awairOptions.Value;
     }
 
-    public async Task<List<AwairDeviceData>> GetAwairDeviceDataAsync()
+    public async Task<List<AwairDeviceData>> GetAwairDeviceDataAsync(CancellationToken cancellationToken = default)
     {
         List<AwairDeviceData> data = new();
         foreach (var device in _awairOptions.Devices)
         {
+            if (cancellationToken.IsCancellationRequested)
+            {
+                break;
+            }
+            
             data.Add(new AwairDeviceData()
             {
                 DisplayName = device.DisplayName,

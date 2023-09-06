@@ -3,18 +3,17 @@ using MediatR;
 
 namespace BlazorApp.Services;
 
-public class GetAirDataHandler : IRequestHandler<GetAwairDeviceDataQuery, List<AwairDeviceData>>
+public class GetAwairDeviceDataHandler : IRequestHandler<GetAwairDeviceDataQuery, List<AwairDeviceData>>
 {
     private readonly AwairService _awairService;
 
-    public GetAirDataHandler(AwairService awairService)
+    public GetAwairDeviceDataHandler(AwairService awairService)
     {
         _awairService = awairService;
     }
 
     public async Task<List<AwairDeviceData>> Handle(GetAwairDeviceDataQuery request, CancellationToken cancellationToken)
     {
-        await Task.Delay(500, cancellationToken);
-        return await _awairService.GetAwairDeviceDataAsync();
+        return await _awairService.GetAwairDeviceDataAsync(cancellationToken);
     }
 }
