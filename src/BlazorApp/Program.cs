@@ -5,7 +5,7 @@ using BlazorApp.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddRazorComponents().AddServerComponents();
+builder.Services.AddRazorComponents().AddInteractiveServerComponents();
 
 builder.Services.AddScoped<AwairService>();
 builder.Services.AddHttpClient<AwairService>();
@@ -30,6 +30,9 @@ app.UseHttpsRedirection();
 
 app.UseStaticFiles();
 
-app.MapRazorComponents<App>();
+app.MapRazorComponents<App>().AddInteractiveServerRenderMode();
+
+app.UseRouting();
+app.UseAntiforgery();
 
 app.Run();
